@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🏃‍♀️​🏃🏻</title>
+    <link rel="stylesheet" href="css/my_styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+      integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+      integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+      crossorigin=""
+    ></script>
+  </head>
+  <body>
+    <nav></nav>
+    <header>
+      <h1>🏃‍♀️​🏃🏻​Log your run🏃🏻🏃‍♀️​​</h1>
+    </header>
+    <section>
+      <div id="map" class="map"></div>
+      <div class="buttons">
+        <button class="start_button" onclick="start_locate()">Start</button>
+        <button class="stop_button" onclick="stop_locate()">Stop</button>
+      </div>
+    </section>
+    <a class="buttons" href="https://www.instagram.com/run.bpm/" target="_blank"
+      ><img src="https://img.icons8.com/ios/50/000000/instagram-new--v1.png"
+    /></a>
+    <footer class="footer_container">
+      <span class="references">References</span>
+      <a
+        class="references"
+        target="_blank"
+        href="https://icons8.com/icon/32292/instagram"
+        >Instagram icon by Icons8</a
+      >
+    </footer>
+    <script src="js/runbpm.js"></script>
+  </body>
+</html>
