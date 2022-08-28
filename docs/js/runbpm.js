@@ -16,10 +16,10 @@ function onLocationFound(e) {
     distance += lastDistance;
   }
   console.log("latlng:", e.latlng);
-  console.log("path: ", path);
+
   path.push(e.latlng);
   lastlatlng = e.latlng;
-  var polyline;
+
   if (started === true) {
     L.marker(e.latlng).addTo(map).bindPopup("Start").openPopup();
     started = false;
@@ -54,6 +54,7 @@ function start_locate() {
 function stop_locate() {
   console.log("Stop locating");
   console.log("lastlatlng ", lastlatlng);
+  console.log("path: ", path);
   var message = `Stop ${distance} metters `;
   var polyline = L.polyline(path, { color: "red" }).addTo(map);
   // zoom the map to the polyline
