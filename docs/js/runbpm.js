@@ -28,7 +28,7 @@ function onLocationFound(e) {
     map.fitBounds(polyline.getBounds());
   } else {
     if (polyline) {
-      polyline.setLatLngs(path);
+      polyline = L.polyline(path, { color: "red" }).addTo(map);
       // zoom the map to the polyline
       map.fitBounds(polyline.getBounds());
     }
