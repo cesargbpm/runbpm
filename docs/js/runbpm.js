@@ -1,6 +1,8 @@
 var map = L.map("map").fitWorld();
 var started = false;
-var lastlatlng = {};
+var lastlatlng;
+var path = [];
+var distance = 0;
 
 var tiles = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 19,
@@ -9,15 +11,29 @@ var tiles = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 }).addTo(map);
 
 function onLocationFound(e) {
-  var radius = e.accuracy / 2;
-  console.log("radius:", radius);
+  if (lastlatlng) {
+    var lastDistance = lastlatlng.distanceTo(e.latlng);
+    distance += lastDistance;
+  }
   console.log("latlng:", e.latlng);
-
+  console.log("path: ", path);
+  path.push(e.latlng);
+  lastlatlng = e.latlng;
+  var polyline;
   if (started === true) {
     L.marker(e.latlng).addTo(map).bindPopup("Start").openPopup();
     started = false;
+    polyline = L.polyline(path, { color: "red" }).addTo(map);
+    // zoom the map to the polyline
+    map.fitBounds(polyline.getBounds());
+  } else {
+    if (polyline) {
+      polyline.setLatLngs(path);
+      // zoom the map to the polyline
+      map.fitBounds(polyline.getBounds());
+    }
   }
-  lastlatlng = e.latlng;
+
   //
   //if (stoped === true){
   //  L.marker(e.latlng).addTo(map).bindPopup("Stop").openPopup();
@@ -40,11 +56,16 @@ function start_locate() {
   console.log("Start locating");
   map.locate({ setView: true, maxZoom: 19, watch: true });
   started = true;
+  document.getElementById("stop_button").style.visibility = "visible";
+  document.getElementById("start_button").style.visibility = "hidden";
 }
 
 function stop_locate() {
   console.log("Stop locating");
   console.log("lastlatlng ", lastlatlng);
-  L.marker(lastlatlng).addTo(map).bindPopup("Stop").openPopup();
+  var message = `Stop ${distance} metters `;
+  L.marker(lastlatlng).addTo(map).bindPopup(message).openPopup();
   map.stopLocate();
+  document.getElementById("stop_button").style.visibility = "hidden";
+  document.getElementById("restart_button").style.visibility = "visible";
 }

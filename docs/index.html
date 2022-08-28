@@ -26,8 +26,19 @@
     <section>
       <div id="map" class="map"></div>
       <div class="buttons">
-        <button class="start_button" onclick="start_locate()">Start</button>
-        <button class="stop_button" onclick="stop_locate()">Stop</button>
+        <button id="start_button" class="start_button" onclick="start_locate()">
+          Start
+        </button>
+        <button id="stop_button" class="stop_button" onclick="stop_locate()">
+          Stop
+        </button>
+        <button
+          id="restart_button"
+          class="restart_button"
+          onclick="location.reload()"
+        >
+          Restart
+        </button>
       </div>
     </section>
     <a class="buttons" href="https://www.instagram.com/run.bpm/" target="_blank"
