@@ -45,7 +45,12 @@ map.locate({ setView: true, maxZoom: 19 });
 
 function start_locate() {
   console.log("Start locating");
-  map.locate({ setView: true, maxZoom: 19, watch: true });
+  map.locate({
+    setView: true,
+    maxZoom: 19,
+    watch: true,
+    enableHighAccuracy: true,
+  });
   started = true;
   document.getElementById("stop_button").style.visibility = "visible";
   document.getElementById("start_button").style.visibility = "hidden";
