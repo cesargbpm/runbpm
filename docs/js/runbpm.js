@@ -24,6 +24,9 @@ function onLocationFound(e) {
     L.marker(e.latlng).addTo(map).bindPopup("Start").openPopup();
     started = false;
   }
+  var polyline = L.polyline(path, { color: "red" }).addTo(map);
+  // zoom the map to the polyline
+  map.fitBounds(polyline.getBounds());
 
   //
   //if (stoped === true){
@@ -61,9 +64,9 @@ function stop_locate() {
   console.log("lastlatlng ", lastlatlng);
   console.log("path: ", path);
   var message = `Stop ${distance} metters `;
-  var polyline = L.polyline(path, { color: "red" }).addTo(map);
+  // var polyline = L.polyline(path, { color: "red" }).addTo(map);
   // zoom the map to the polyline
-  map.fitBounds(polyline.getBounds());
+  // map.fitBounds(polyline.getBounds());
   L.marker(lastlatlng).addTo(map).bindPopup(message).openPopup();
   map.stopLocate();
   document.getElementById("stop_button").style.visibility = "hidden";
