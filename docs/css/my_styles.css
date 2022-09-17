@@ -1,11 +1,11 @@
 * {
   margin: 0px;
-
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 .map {
-  height: 60vh;
+  height: 50vh;
+  background: pink;
 }
 
 header {
@@ -79,4 +79,44 @@ header {
   border-radius: 50%;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   visibility: hidden;
+}
+.container {
+  display: grid;
+  grid-template: repeat(2, 1fr) / repeat(2, 1fr);
+  place-items: center;
+}
+
+.speed_box {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  height: 50px;
+  background-color: rgba(211, 211, 211, 0.5);
+  grid-column: 1;
+}
+
+.elevation_box {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  height: 50px;
+  background-color: rgba(211, 211, 211, 0.5);
+  grid-column: 2;
+  visibility: hidden;
+}
+
+.timer_box {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  height: 50px;
+  background-color: rgba(211, 211, 211, 0.5);
+  grid-column: 1 / 3;
+}
+
+.section_one {
+  background: lightgray;
 }

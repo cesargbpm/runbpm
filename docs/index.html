@@ -23,8 +23,17 @@
     <header>
       <h1>🏃‍♀️​🏃🏻​Log your run🏃🏻🏃‍♀️​​</h1>
     </header>
-    <section>
+    <section id="section_one" class="section_one">
       <div id="map" class="map"></div>
+      <div id="container" class="container">
+        <div id="timer_box" class="timer_box">
+          <span id="timer"></span>
+        </div>
+        <div id="speed_box" class="speed_box">
+          <span id="speed_value"></span>
+        </div>
+        <div id="elevation_box" class="elevation_box"></div>
+      </div>
       <div class="buttons">
         <button id="start_button" class="start_button" onclick="start_locate()">
           Start
