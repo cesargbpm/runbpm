@@ -119,9 +119,11 @@ function start_timer() {
 
   console.log(`Path_info ${JSON.stringify(path_info)}`);
   if (path_detail) {
-    const speed =
+    const speed = Math.round(
       (path_info.delta_distance * 1000) /
-      (path_info.delta_time * 1000 * 60 * 60);
+        (path_info.delta_time * 1000 * 60 * 60)
+    );
+
     document.getElementById("speed_value").innerHTML = `Speed : ${speed} KM/H`;
   } else {
     document.getElementById("speed_value").innerHTML = `Starting...`;
@@ -132,7 +134,7 @@ function stop_locate() {
   console.log("Stop locating");
   console.log("lastlatlng ", lastlatlng);
   console.log("path: ", path);
-  var message = `Stop ${distance} metters `;
+  var message = `Stop ${Math.round(distance)} metters `;
   // var polyline = L.polyline(path, { color: "red" }).addTo(map);
   // zoom the map to the polyline
   // map.fitBounds(polyline.getBounds());
