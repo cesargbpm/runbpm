@@ -1,8 +1,17 @@
 var map = L.map("map").fitWorld();
 var started = false;
 var lastlatlng;
+var last_location_date;
 var path = [];
 var distance = 0;
+var speed = 0;
+var start_time;
+var ss = 0;
+var mm = 0;
+var hh = 0;
+var total_ss = 0;
+var timer_interval;
+var path_detail = [];
 
 var tiles = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 19,
@@ -12,12 +21,36 @@ var tiles = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 
 function onLocationFound(e) {
   if (lastlatlng) {
-    var lastDistance = lastlatlng.distanceTo(e.latlng);
-    distance += lastDistance;
+    var last_distance = lastlatlng.distanceTo(e.latlng);
+    distance += last_distance;
   }
   console.log("latlng:", e.latlng);
 
+  let delta_time = 0;
+  if (last_location_date) {
+    console.log("last_location_date is nos null");
+    console.log("last_location_date: ", last_location_date.toString());
+    delta_time = new Date() - last_location_date;
+    last_location_date = new Date();
+    console.log("delta_time: ", delta_time);
+    console.log("new last_location_date: ", last_location_date.toString());
+  } else {
+    console.log("last_location_date is null");
+    delta_time = 0;
+    last_location_date = new Date();
+    console.log("new last_location_date: ", last_location_date.toString());
+  }
+
   path.push(e.latlng);
+  path_detail.push({
+    latlng: e.latlng,
+    distance: distance,
+    delta_distance: last_distance ? last_distance : 0,
+    delta_time: delta_time ? delta_time : 0,
+    date: last_location_date,
+  });
+  console.log("path_detail_push ", path_detail);
+
   lastlatlng = e.latlng;
 
   if (started === true) {
@@ -57,6 +90,42 @@ function start_locate() {
   started = true;
   document.getElementById("stop_button").style.visibility = "visible";
   document.getElementById("start_button").style.visibility = "hidden";
+  timer_interval = setInterval(start_timer, 1000);
+}
+
+function start_timer() {
+  total_ss++;
+  ss++;
+
+  if (ss > 59) {
+    mm++;
+    ss = 0;
+  }
+  if (mm > 59) {
+    hh++;
+    mm = 0;
+  }
+  speed = total_ss > 0 ? Math.round(distance / ss) : 0;
+  let print_Ss = ss < 10 ? "0" + ss : ss;
+  let print_mm = mm < 10 ? "0" + mm : mm;
+  let print_hh = hh < 10 ? "0" + hh : hh;
+  document.getElementById(
+    "timer"
+  ).innerHTML = `${print_hh} : ${print_mm} : ${print_Ss}`;
+
+  const path_info = path_detail
+    ? path_detail[path_detail.length - 1]
+    : { info: "no_path" };
+
+  console.log(`Path_info ${JSON.stringify(path_info)}`);
+  if (path_detail) {
+    const speed =
+      (path_info.delta_distance * 1000) /
+      (path_info.delta_time * 1000 * 60 * 60);
+    document.getElementById("speed_value").innerHTML = `Speed : ${speed} KM/H`;
+  } else {
+    document.getElementById("speed_value").innerHTML = `Starting...`;
+  }
 }
 
 function stop_locate() {
@@ -71,4 +140,5 @@ function stop_locate() {
   map.stopLocate();
   document.getElementById("stop_button").style.visibility = "hidden";
   document.getElementById("restart_button").style.visibility = "visible";
+  clearInterval(timer_interval);
 }
